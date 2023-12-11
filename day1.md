@@ -10,6 +10,21 @@ Go 语言的特点就是简洁, 从语法上直观的感受就是比较像 pytho
 
 ## 语法
 
+### 变量与常量
+
+变量声明方式:
+
+```go
+// 隐式初始化声明
+var name string
+
+// 显式初始化声明
+var name string = "AntPro"
+
+// 只能在函数中使用的快速声明
+name := "AntPro"
+```
+
 ### `for` 循环
 
 Go 只有 `for` 循环, 它的语法为:
@@ -55,6 +70,8 @@ hash[key] = value
 ```
 
 ### condition
+
+必须是 boolean 值, 没有类型转换
 
 - string 判断 `str == ""`
 - char 判断 `str[i] == ' '`
