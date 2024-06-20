@@ -44,7 +44,6 @@ func downloadFile(url string, dest string, p *mpb.Progress) error {
 		),
 		mpb.AppendDecorators(
 			decor.Percentage(decor.WC{W: 5}),
-			decor.EwmaSpeed(decor.UnitKiB, " %6.2f KiB/s", 60, decor.WCSyncWidth),
 		),
 	)
 
