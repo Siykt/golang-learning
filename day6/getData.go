@@ -85,7 +85,7 @@ func worker(jobs <-chan string, p *mpb.Progress, wg *sync.WaitGroup) {
 }
 
 func main() {
-	const numWorkers = 10
+	const numWorkers = 2
 	jobs := make(chan string, numWorkers)
 	var wg sync.WaitGroup
 
@@ -97,7 +97,7 @@ func main() {
 	}
 
 	go func() {
-		for id := 24441; id < 30000; id++ {
+		for id := 27045; id < 30000; id++ {
 			jobs <- strconv.Itoa(id)
 		}
 		close(jobs)
