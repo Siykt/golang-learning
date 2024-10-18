@@ -21,18 +21,17 @@ func downloadFile(url string, dest string, p *mpb.Progress) error {
 	}
 	defer resp.Body.Close()
 
+	total := resp.ContentLength
+	if total < 1*1024 { // Skip files smaller than 1KB
+		// _, err = io.Copy(out, resp.Body) // Still need to download to handle renaming
+		return nil
+	}
+
 	out, err := os.Create(dest)
 	if err != nil {
 		return err
 	}
 	defer out.Close()
-
-	total := resp.ContentLength
-
-	if total < 1*1024 { // Skip files smaller than 1KB
-		_, err = io.Copy(out, resp.Body) // Still need to download to handle renaming
-		return err
-	}
 
 	parts := strings.Split(url, "/")
 	desiredPart := parts[len(parts)-2] + ".rar"
@@ -69,18 +68,18 @@ func worker(jobs <-chan string, p *mpb.Progress, wg *sync.WaitGroup) {
 			continue
 		}
 
-		fileInfo, err := os.Stat(dest)
-		if err != nil {
-			continue
-		}
+		// _, err := os.Stat(dest)
+		// if err != nil {
+		// 	continue
+		// }
 
-		if fileInfo.Size() < 1*1024*1024 {
-			newPath := filepath.Join("G:/HG/", job+".xml")
-			err := os.Rename(dest, newPath)
-			if err != nil {
-				continue
-			}
-		}
+		// if fileInfo.Size() < 1*1024*1024 {
+		// 	newPath := filepath.Join("G:/HG/", job+".xml")
+		// 	err := os.Rename(dest, newPath)
+		// 	if err != nil {
+		// 		continue
+		// 	}
+		// }
 	}
 }
 
@@ -97,7 +96,7 @@ func main() {
 	}
 
 	go func() {
-		for id := 28329; id < 30000; id++ {
+		for id := 33062; id < 36000; id++ {
 			jobs <- strconv.Itoa(id)
 		}
 		close(jobs)
